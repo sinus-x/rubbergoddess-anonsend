@@ -1,0 +1,107 @@
+:root {
+	--color-rgs: #54355F;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+
+	color: white;
+	font-family: sans-serif;
+}
+
+body {
+	height: 100vh;
+	padding: 1rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	background-color: var(--color-rgs);
+}
+
+.box {
+	border: 0.3rem solid white;
+	padding: 1rem 2rem;
+}
+
+.inverse {
+	color: var(--color-rgs);
+	background-color: white;
+}
+
+.rounded {
+	border-radius: 0.3rem;
+}
+
+/* INDEX */
+
+form * {
+	display: block;
+	margin: 1rem 0;
+}
+
+form p {
+	text-align: center;
+}
+
+form input {
+	width: 18rem;
+	padding: 0.5rem;
+
+	border: 0.1rem solid white;
+
+	transition: all 0.2s ease-in-out;
+}
+
+form input[type="submit"] {
+	background-color: var(--color-rgs);
+}
+
+form input:hover {
+	font-weight: bold;
+	color: var(--color-rgs);
+	background-color: white;
+}
+
+/* UPLOAD */
+
+body.upload .box {
+	text-align: center;
+}
+
+body.upload .box .code {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	margin: 0.6rem;
+
+	letter-spacing: 0.2rem;
+
+	font-size: 2rem;
+	font-family: monospace;
+}
+
+body.upload .box span {
+	padding: 0.2rem;
+	font-family: monospace;
+}
+
+.backlink {
+	display: block;
+	margin: 2rem;
+	padding: .5rem 1rem;
+
+	text-decoration: none;
+	color: var(--color-rgs);
+	background-color: white;
+	border: .2rem solid white;
+
+	transition: all 0.2s ease-in-out;
+}
+.backlink:hover {
+	color: white;
+	background-color: var(--color-rgs);
+}
