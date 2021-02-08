@@ -4,13 +4,9 @@ A webserver for the [Rubbergoddess](https://github.com/sinus-x/rubbergoddess) bo
 
 ## Setup
 
-Create a file `private.php` with a content of
+Copy the `settings.template.php` to `settings.php` and fill the variables, make sure to set up the APIKEY as secure as possible.
 
-```php
-<?php
-$apikey = "your secret API password";
-?>
-```
+Create the `uploads/` directory, if there is none.
 
 ## Development
 
@@ -25,3 +21,7 @@ php -S 127.0.0.1:8080
 Licensed as [MIT](LICENSE).
 
 All notes, issues and PRs are welcome.
+
+### Contributors
+
+- [CrafterSvK](https://github.com/CrafterSvK): initial help with the code
