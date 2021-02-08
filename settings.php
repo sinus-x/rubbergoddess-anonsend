@@ -1,5 +1,5 @@
 <?php
-$name = "Rubbergoddess anonymous upload";
-$filesize = 8; // MB
-$prefix = "?";
-?>
+define("NAME", "Rubbergoddess anonymous upload");
+define("FILESIZE", 8); // MB
+define("PREFIX", "?");
+
