@@ -1,5 +1,5 @@
 <?php
-include_once("settings.php");
+require_once("settings.php");
 
 if (!isset($_POST["submit"])) {
 	header("Location: /", TRUE, 307);
@@ -14,7 +14,7 @@ if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] != UPLOA
 	$message2 = "You did not upload any file.";
 }
 
-if ($_FILES["uploadedFile"]["size"] > $filesize * 1024 * 1024) {
+if ($_FILES["uploadedFile"]["size"] > FILESIZE * 1024 * 1024) {
 	$valid = False;
 	$message2 = "Your file is too big.";
 }
@@ -27,7 +27,12 @@ if (!in_array($extension, array("jpg", "jpeg", "png"))) {
 	$message2 = "Unsupported file format.";
 }
 
-$newname = substr(md5(time() . $filename), 0, 8) . "." . $extension;
+if (!in_array($_FILES['uploadedFile']['type'], array("image/jpeg", "image/png"))) {
+    $valid = False;
+    $message2 = "Unsupported mime type.";
+}
+
+$newname = substr(md5(time() . $_FILES["uploadedFile"]["name"]), 0, 8) . "." . $extension;
 
 if ($valid) {
 	if (move_uploaded_file($_FILES["uploadedFile"]["tmp_name"], "uploads/" . $newname)) {
@@ -39,12 +44,12 @@ if ($valid) {
 }
 
 if ($valid) {
-	$message1 = "Your file was succesfully uploaded.";
-	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">" . $prefix . "anonsend submit (channel) " . $newname . "</span>.";
+	$message1 = "Your file was successfully uploaded.";
+	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">" . PREFIX . "anonsend submit (channel) " . $newname . "</span>.";
 	$classname = "success";
 } else {
-	$message1 = "An error occured.";
-	if (strlen($message2) == 0) $message2 = "You must have done something wrong.";
+	$message1 = "An error occurred.";
+	if (strlen($message2) === 0) $message2 = "You must have done something wrong.";
 	$classname = "error";
 }
 
@@ -57,9 +62,9 @@ if ($valid) {
 	<link rel="stylesheet" href="stylesheet.css">
 </head>
 <body class="upload">
-	<div class="<?php echo $classname; ?> box">
-		<p><?php echo $message1; ?></p>
-		<p><?php echo $message2; ?></p>
+	<div class="<?= $classname ?> box">
+		<p><?= $message1 ?></p>
+		<p><?= $message2 ?></p>
 	</div>
 	<a class="backlink" href="/">back</a>
 </body>
