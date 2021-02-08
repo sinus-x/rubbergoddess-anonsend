@@ -11,8 +11,9 @@ include_once("settings.php");
 <body class="index">
 	<form class="box" action="upload.php" method="post" enctype="multipart/form-data">
 		<p>Select file (JPEG or PNG, max <?= FILESIZE ?> MB)</p>
-		<input type="file" name="uploadedFile" id="uploadedFile">
-		<input type="submit" value="Upload" name="submit">
+		<input type="hidden" name="MAX_FILE_SIZE" value="<?= FILESIZE * 1024 * 1024 ?>" />
+		<input type="file" name="uploadedFile" id="uploadedFile" />
+		<input type="submit" value="Upload" name="submit" />
 	</form>
 </body>
 </html>

@@ -1,21 +1,21 @@
 <?php
-require_once("private.php");
+require_once("settings.php");
 
-if (!isset($_GET["apikey"]) || $_GET["apikey"] !== $apikey) {
+if (!isset($_GET["apikey"]) || $_GET["apikey"] !== APIKEY) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 401 Unauthorised");
 	echo "Invalid API key.";
 	die();
 }
 
-if (!isset($_GET["file"]) || strpos($_GET["file"], "..") !== false || !file_exists("uploads/" . $_GET["file"])) {
-	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-	echo "Not found.";
+if (!isset($_GET["action"]) || !in_array($_GET["action"], ["download", "delete", "list"])) {
+	header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request");
+	echo 'Bad "action" parameter.';
 	die();
 }
 
-if (!isset($_GET["action"]) || !in_array($_GET["action"], array("download", "delete"))) {
-	header($_SERVER["SERVER_PROTOCOL"] . " 400 Bad Request");
-	echo 'Bad "action" parameter.';
+if (in_array($_GET["action"], ["download", "delete"]) && (!isset($_GET["file"]) || strpos($_GET["file"], "..") !== false || !file_exists("uploads/" . $_GET["file"]))) {
+	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+	echo "Not found.";
 	die();
 }
 
@@ -48,3 +48,12 @@ if ($_GET["action"] == "delete") {
 	die();
 }
 
+if ($_GET["action"] == "list") {
+	$files = array_values(array_diff(scandir("uploads/"), [".", "..", ".htaccess"]));
+	$result = [];
+	foreach ($files as $file) $result[$file] = filemtime("uploads/" . $file);
+
+	header("Content-Type: application/json; charset=utf-8");
+	echo json_encode($result);
+	die();
+}

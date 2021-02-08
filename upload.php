@@ -9,9 +9,9 @@ if (!isset($_POST["submit"])) {
 $valid = True;
 $message2 = "";
 
-if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] != UPLOAD_ERR_OK) {
+if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] !== UPLOAD_ERR_OK) {
 	$valid = False;
-	$message2 = "You did not upload any file.";
+	$message2 = "No file was uploaded.";
 }
 
 if ($_FILES["uploadedFile"]["size"] > FILESIZE * 1024 * 1024) {
@@ -22,17 +22,12 @@ if ($_FILES["uploadedFile"]["size"] > FILESIZE * 1024 * 1024) {
 $filename = explode(".", $_FILES["uploadedFile"]["name"]);
 $extension = strtolower(end($filename));
 
-if (!in_array($extension, array("jpg", "jpeg", "png"))) {
+if ($valid && (!in_array($extension, ["jpg", "jpeg", "png"]) || !in_array($_FILES['uploadedFile']['type'], ["image/jpeg", "image/png"]))) {
 	$valid = False;
 	$message2 = "Unsupported file format.";
 }
 
-if (!in_array($_FILES['uploadedFile']['type'], array("image/jpeg", "image/png"))) {
-    $valid = False;
-    $message2 = "Unsupported mime type.";
-}
-
-$newname = substr(md5(time() . $_FILES["uploadedFile"]["name"]), 0, 8) . "." . $extension;
+$newname = substr(md5(time() . $_FILES["uploadedFile"]["name"]), 0, NAMELENGTH) . "." . $extension;
 
 if ($valid) {
 	if (move_uploaded_file($_FILES["uploadedFile"]["tmp_name"], "uploads/" . $newname)) {
@@ -58,7 +53,7 @@ if ($valid) {
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Rubbergoddess anonymous upload</title>
+	<title><?= NAME ?></title>
 	<link rel="stylesheet" href="stylesheet.css">
 </head>
 <body class="upload">
