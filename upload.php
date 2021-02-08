@@ -39,7 +39,7 @@ if ($valid) {
 
 if ($valid) {
 	$message1 = "Your file was succesfully uploaded.";
-	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">?anonsend (channel) " . $newname . "</span>.";
+	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">" . $prefix . "anonsend submit (channel) " . $newname . "</span>.";
 	$classname = "success";
 } else {
 	$message1 = "An error occured.";
