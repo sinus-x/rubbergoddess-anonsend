@@ -7,6 +7,7 @@ if (!isset($_POST["submit"])) {
 }
 
 $valid = True;
+$message2 = "";
 
 if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] != UPLOAD_ERR_OK) {
 	$valid = False;
@@ -43,7 +44,7 @@ if ($valid) {
 	$classname = "success";
 } else {
 	$message1 = "An error occured.";
-	if (sizeof($message2) == 0) $message2 = "You must have done something wrong.";
+	if (strlen($message2) == 0) $message2 = "You must have done something wrong.";
 	$classname = "error";
 }
 
