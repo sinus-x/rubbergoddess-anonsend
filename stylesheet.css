@@ -19,6 +19,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	overflow: hidden;
 
 	background-color: var(--color-rgs);
 }
@@ -48,13 +49,17 @@ form p {
 	text-align: center;
 }
 
-form input {
+form input, select {
 	width: 18rem;
 	padding: 0.5rem;
 
 	border: 0.1rem solid white;
 
 	transition: all 0.2s ease-in-out;
+}
+
+form select {
+	background-color: var(--color-rgs);
 }
 
 form input[type="submit"] {

@@ -7,7 +7,7 @@ if (!isset($_POST["submit"])) {
 }
 
 $valid = True;
-$message2 = "";
+$message2 = "You must have done something wrong.";
 
 if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] !== UPLOAD_ERR_OK) {
 	$valid = False;
@@ -17,6 +17,11 @@ if (!isset($_FILES["uploadedFile"]) || $_FILES["uploadedFile"]["error"] !== UPLO
 if ($_FILES["uploadedFile"]["size"] > FILESIZE * 1024 * 1024) {
 	$valid = False;
 	$message2 = "Your file is too big.";
+}
+
+if ($valid && !isset($_POST["channel"]) || !in_array($_POST["channel"], CHANNELS)) {
+	$valid = False;
+	$message2 = "Invalid channel.";
 }
 
 $filename = explode(".", $_FILES["uploadedFile"]["name"]);
@@ -40,11 +45,10 @@ if ($valid) {
 
 if ($valid) {
 	$message1 = "Your file was successfully uploaded.";
-	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">" . PREFIX . "anonsend submit (channel) " . $newname . "</span>.";
+	$message2 = "You can send it to your channel with <span class=\"inverse rounded\">" . PREFIX . "anonsend submit " . $_POST["channel"] . " " . $newname . "</span>";
 	$classname = "success";
 } else {
 	$message1 = "An error occurred.";
-	if (strlen($message2) === 0) $message2 = "You must have done something wrong.";
 	$classname = "error";
 }
 
@@ -53,6 +57,7 @@ if ($valid) {
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0.0, minimum-scale=1.0, maximum-scale=1.0">
 	<title><?= NAME ?></title>
 	<link rel="stylesheet" href="stylesheet.css">
 </head>
